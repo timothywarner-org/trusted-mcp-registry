@@ -1,7 +1,15 @@
 # Trusted MCP Registry
 
+[![Validate](https://github.com/timothywarner-org/trusted-mcp-registry/actions/workflows/validate.yml/badge.svg)](https://github.com/timothywarner-org/trusted-mcp-registry/actions/workflows/validate.yml)
+[![Deploy](https://github.com/timothywarner-org/trusted-mcp-registry/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/timothywarner-org/trusted-mcp-registry/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A lightweight, Azure-hosted **Trusted MCP Registry** for VS Code on Windows 11
 and GitHub Enterprise Cloud. Built as a teaching example by **Tim Warner**.
+
+> Phase 1 MVP — a *policy plane* for MCP, not a runtime. JSON over HTTPS, an
+> allowlist file in Git, a PowerShell sync script that materializes
+> `.vscode/mcp.json`. Cost target: **~$0/month** on SWA Free tier.
 
 This is a metadata + governance control plane, not a runtime. The registry
 publishes JSON manifests over HTTPS; an allowlist file (PR-reviewed, Git-tracked)
@@ -58,12 +66,26 @@ Open the workspace in VS Code on Windows 11. The MCP client picks up
 
 ## Deploy
 
-1. `az group create -n rg-trusted-mcp-registry -l eastus2`
-2. `az deployment group create -g rg-trusted-mcp-registry -f infra/main.bicep`
-3. Capture the deployment token:
-   `az staticwebapp secrets list -n <name> -g rg-trusted-mcp-registry --query properties.apiKey -o tsv`
-4. Set repo secret `AZURE_STATIC_WEB_APPS_API_TOKEN` to that value.
-5. Push to `main` — the Action runs validation, then deploys.
+```pwsh
+# 1. Provision the SWA (Free tier, ~$0/month)
+az group create -n rg-trusted-mcp-registry -l eastus2
+az deployment group create -g rg-trusted-mcp-registry -f infra/main.bicep
+
+# 2. Capture the deployment token and store it as a repo Action secret
+$swa   = (az deployment group show -g rg-trusted-mcp-registry -n main --query properties.outputs.staticWebAppName.value -o tsv)
+$token = az staticwebapp secrets list -n $swa -g rg-trusted-mcp-registry --query properties.apiKey -o tsv
+gh secret set AZURE_STATIC_WEB_APPS_API_TOKEN -R timothywarner-org/trusted-mcp-registry --body $token
+
+# 3. Push to main — validate.yml + deploy.yml take it from here
+git push
+```
+
+After the deploy job goes green, point the camera at:
+
+```pwsh
+$host = (az staticwebapp show -n $swa -g rg-trusted-mcp-registry --query defaultHostname -o tsv)
+Invoke-RestMethod "https://$host/registry/index.json"
+```
 
 ## Phase 1 scope
 

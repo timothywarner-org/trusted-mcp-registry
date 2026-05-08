@@ -1,0 +1,13 @@
+{
+  "$schema": "../schemas/allowlist-schema.json",
+  "version": "1.0.0",
+  "updated": "2026-05-08",
+  "allowedServers": [
+    "io.github.github/github-mcp",
+    "com.microsoft/filesystem-mcp",
+    "com.timothywarner/azure-ai-search"
+  ],
+  "blockedServers": [
+    "com.slack/slack-mcp"
+  ]
+}

@@ -1,0 +1,28 @@
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editors
+.vs/
+*.swp
+*.swo
+
+# Node (used only by @azure/static-web-apps-cli for local preview)
+node_modules/
+npm-debug.log*
+
+# Azure / SWA
+.swa/
+
+# Local secrets
+*.local.json
+*.secrets.json
+.env
+.env.*
+!.env.example
+
+# Generated artifacts
+out/
+dist/
+*.log

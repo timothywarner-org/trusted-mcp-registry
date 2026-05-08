@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trusted-mcp-registry.example/schemas/registry-schema.json",
+  "title": "Trusted MCP Server Manifest",
+  "description": "Metadata for a single MCP server entry in the trusted registry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "publisher", "version", "transport", "trust"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "description": "Reverse-DNS-style identifier in the form 'reverse.dns/short-name'.",
+      "pattern": "^[a-z0-9.-]+/[a-z0-9.-]+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "publisher": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version (semver 2.0.0).",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["stdio", "http", "sse"]
+    },
+    "launch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command"],
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "args": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": ["tools", "resources", "prompts", "sampling", "logging"]
+      }
+    },
+    "authentication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "enum": ["none", "oauth", "apiKey"] },
+        "scopes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reviewedBy", "lastReviewed"],
+      "properties": {
+        "status": { "type": "string", "enum": ["approved", "pending", "blocked"] },
+        "reviewedBy": { "type": "string", "minLength": 1 },
+        "lastReviewed": {
+          "type": "string",
+          "description": "ISO 8601 date (YYYY-MM-DD).",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "riskLevel": { "type": "string", "enum": ["low", "medium", "high"] },
+        "reviewNotes": { "type": "string", "maxLength": 1000 },
+        "publisherVerified": { "type": "boolean" },
+        "signedManifest": { "type": "boolean" }
+      }
+    }
+  }
+}

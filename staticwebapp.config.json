@@ -1,0 +1,22 @@
+{
+  "routes": [
+    {
+      "route": "/registry/*",
+      "headers": {
+        "Cache-Control": "public, max-age=300"
+      }
+    }
+  ],
+  "mimeTypes": {
+    ".json": "application/json"
+  },
+  "globalHeaders": {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "no-referrer"
+  },
+  "responseOverrides": {
+    "404": { "statusCode": 404 }
+  }
+}

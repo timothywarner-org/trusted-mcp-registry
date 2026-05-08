@@ -1,0 +1,27 @@
+{
+  "$schema": "../../schemas/registry-schema.json",
+  "id": "com.slack/slack-mcp",
+  "name": "Slack MCP Server",
+  "publisher": "Slack (Salesforce)",
+  "version": "0.9.0",
+  "description": "Community MCP server for Slack messaging and channel discovery.",
+  "transport": "stdio",
+  "launch": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-slack"]
+  },
+  "capabilities": ["tools", "resources"],
+  "authentication": {
+    "type": "oauth",
+    "scopes": ["channels:read", "chat:write"]
+  },
+  "trust": {
+    "status": "blocked",
+    "reviewedBy": "Tim Warner",
+    "lastReviewed": "2026-05-08",
+    "riskLevel": "high",
+    "publisherVerified": false,
+    "signedManifest": false,
+    "reviewNotes": "Blocked pending publisher verification and a security review of channel-write scopes. Demonstrates explicit deny."
+  }
+}

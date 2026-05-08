@@ -1,0 +1,13 @@
+{
+  "registryVersion": "1.0.0",
+  "generated": "2026-05-08T00:00:00Z",
+  "publisher": "Tim Warner",
+  "description": "Lightweight Trusted MCP Registry — Phase 1 MVP",
+  "servers": [
+    { "id": "io.github.github/github-mcp",      "manifest": "/registry/servers/github.json" },
+    { "id": "com.microsoft/filesystem-mcp",     "manifest": "/registry/servers/filesystem.json" },
+    { "id": "com.timothywarner/azure-ai-search", "manifest": "/registry/servers/azure-ai-search.json" },
+    { "id": "com.slack/slack-mcp",              "manifest": "/registry/servers/slack.json" }
+  ],
+  "allowlist": "/registry/allowlist.json"
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../schemas/registry-schema.json",
+  "id": "com.timothywarner/azure-ai-search",
+  "name": "Azure AI Search MCP Server",
+  "publisher": "Tim Warner",
+  "version": "0.2.0",
+  "description": "Internal MCP server that exposes an Azure AI Search index as retrieval tools for grounded answers.",
+  "transport": "stdio",
+  "launch": {
+    "command": "node",
+    "args": ["./servers/azure-ai-search/dist/index.js"],
+    "env": {
+      "AZURE_SEARCH_ENDPOINT": "https://example.search.windows.net",
+      "AZURE_SEARCH_INDEX": "docs"
+    }
+  },
+  "capabilities": ["tools"],
+  "authentication": {
+    "type": "apiKey"
+  },
+  "trust": {
+    "status": "approved",
+    "reviewedBy": "Tim Warner",
+    "lastReviewed": "2026-05-08",
+    "riskLevel": "low",
+    "publisherVerified": true,
+    "signedManifest": false,
+    "reviewNotes": "Internal demo server. API key is sourced from a Key Vault reference at launch."
+  }
+}

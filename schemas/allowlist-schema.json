@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trusted-mcp-registry.example/schemas/allowlist-schema.json",
+  "title": "Trusted MCP Allowlist",
+  "description": "Governance file declaring which MCP server IDs are allowed or explicitly blocked.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updated", "allowedServers"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "updated": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "allowedServers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9.-]+/[a-z0-9.-]+$"
+      }
+    },
+    "blockedServers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9.-]+/[a-z0-9.-]+$"
+      }
+    }
+  }
+}

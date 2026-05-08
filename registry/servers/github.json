@@ -1,0 +1,27 @@
+{
+  "$schema": "../../schemas/registry-schema.json",
+  "id": "io.github.github/github-mcp",
+  "name": "GitHub MCP Server",
+  "publisher": "GitHub",
+  "version": "1.0.0",
+  "description": "Official GitHub integration MCP server. Exposes repos, issues, pull requests, and Actions as tools.",
+  "transport": "stdio",
+  "launch": {
+    "command": "npx",
+    "args": ["-y", "@github/github-mcp-server"]
+  },
+  "capabilities": ["tools", "resources"],
+  "authentication": {
+    "type": "oauth",
+    "scopes": ["repo", "read:org"]
+  },
+  "trust": {
+    "status": "approved",
+    "reviewedBy": "Tim Warner",
+    "lastReviewed": "2026-05-08",
+    "riskLevel": "low",
+    "publisherVerified": true,
+    "signedManifest": false,
+    "reviewNotes": "First-party GitHub publisher. Approved for GHEC experimentation."
+  }
+}

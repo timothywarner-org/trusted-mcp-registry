@@ -1,0 +1,26 @@
+{
+  "$schema": "../../schemas/registry-schema.json",
+  "id": "com.microsoft/filesystem-mcp",
+  "name": "Filesystem MCP Server",
+  "publisher": "Microsoft",
+  "version": "0.4.1",
+  "description": "Provides scoped filesystem read/write tools for an MCP client. Path roots are configured at launch.",
+  "transport": "stdio",
+  "launch": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-filesystem", "${workspaceFolder}"]
+  },
+  "capabilities": ["tools", "resources"],
+  "authentication": {
+    "type": "none"
+  },
+  "trust": {
+    "status": "approved",
+    "reviewedBy": "Tim Warner",
+    "lastReviewed": "2026-05-08",
+    "riskLevel": "medium",
+    "publisherVerified": true,
+    "signedManifest": false,
+    "reviewNotes": "Reviewed launch args confine access to ${workspaceFolder}. Re-review if scope widens."
+  }
+}

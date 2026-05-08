@@ -1,0 +1,21 @@
+name: Validate registry
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Schema + cross-reference checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run validate-registry.ps1
+        shell: pwsh
+        run: ./scripts/validate-registry.ps1 -Strict
